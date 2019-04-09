@@ -6,6 +6,7 @@
 package webtravianautomaton;
 
 import Classes.TravianDriver;
+import errors.OnLogin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.openqa.selenium.WebDriver;
@@ -22,27 +23,48 @@ public class WebTravianAutomaton {
     
     public static void main(String[] args) throws InterruptedException {
         // declaration and instantiation of objects/variables
-    	System.setProperty("webdriver.chrome.driver","/Users/wzuniga/NetBeansProjects/travian/WebTravianAutomaton/lib/chromedriver");
+    	//System.setProperty("webdriver.chrome.driver","/Users/wzuniga/NetBeansProjects/travian/WebTravianAutomaton/lib/chromedriver");
+        System.setProperty("webdriver.chrome.driver","/home/wzuniga/NetBeansProjects/travian/WebTravianAutomaton/lib/chromedriverL");
         WebDriver driver = new ChromeDriver();
         
         gameDriver = new TravianDriver(driver);
 
         // launch Fire fox and direct it to the Base URL
+        boolean pass = false;
+
+        while (!pass) {
+            try {
+                runMain(driver);
+                pass = true;
+            }
+            catch (OnLogin e){
+                System.out.println("Error On Login");
+            }
+                catch (InterruptedException e) {System.out.println("Interrupted");}
+            catch (Exception e) {System.out.println("Exception");}
+        }
+        
+        driver.close();
+    }
+    
+    public static void runMain(WebDriver driver) throws InterruptedException, OnLogin{
         driver.get(Path.login);
         
         gameDriver.logIn();
         
+        //for (int i = 0; true; i++)
+        //    createTroopFoot(1);
+        
         //fieldUpOne(4,7,10,12,13,17,18);
-        for (int i = 0; i < 20; i++) 
-            allFieldUpOne();
+        buildUpOne(19, 13);
         
-        /*boolean flag = true;
+        //for (int i = 0;true; i++){
+            //allFieldUpOne();
+            //createTroopFoot(2);
+            
+        //}
         
-        while(flag) {
-            createTroopFoot(2);
-        }
-        */
-        driver.close();
+        
     }
     
     public static void allFieldUpOne() throws InterruptedException{
@@ -62,7 +84,7 @@ public class WebTravianAutomaton {
                     spend = gameDriver.levelUpCampo(faltantes.get(i));
                     Thread.sleep(spend);
                 }catch(Exception e){
-                    newFaltantes.add(faltantes.get(i));
+                    //newFaltantes.add(faltantes.get(i));
                 }
             }
             faltantes = newFaltantes;
@@ -70,6 +92,21 @@ public class WebTravianAutomaton {
         
     }
     
+    public static void buildUpOne(int build, int times) throws InterruptedException{
+        int spend;
+        System.out.println("Building " + build);
+        while (times != 0) {
+            System.out.println("time " + times);
+            try {
+                spend = gameDriver.levelUpCampo(build);
+                Thread.sleep(spend);
+                times--;
+            } catch (Exception e) {
+                System.out.println("Error on build");
+            }
+        }
+    }
+
     public static void createTroopFoot(Integer ... list) throws InterruptedException{
         for (Integer integer : list){
             gameDriver.createTroop(integer);

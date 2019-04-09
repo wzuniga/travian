@@ -5,6 +5,7 @@
  */
 package Classes;
 
+import errors.OnLogin;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import webtravianautomaton.constans.Path;
@@ -22,10 +23,15 @@ public class TravianDriver {
         this.driver = driver;
     }
     
-    public void logIn(){
-        driver.findElement(By.xpath(Path.nick_path)).sendKeys(Path.nick);
-        driver.findElement(By.xpath(Path.pass_path)).sendKeys(Path.pass);
-        driver.findElement(By.xpath(Path.push_enter)).click();
+    public void logIn() throws OnLogin{
+        try{
+            driver.findElement(By.xpath(Path.nick_path)).sendKeys(Path.nick);
+            driver.findElement(By.xpath(Path.pass_path)).sendKeys(Path.pass);
+            driver.findElement(By.xpath(Path.push_enter)).click();
+        }catch(Exception e){
+            System.out.println(e);
+            throw new OnLogin("Error Login");
+        }
     }
     
     public int levelUpCampo(int n){
@@ -35,7 +41,7 @@ public class TravianDriver {
         int time = Util.convertToInt(text);
         return (time + Path.holg) * 1000;
     }
-    
+     
     public void createTroop(int type){
         driver.get(Path.cuartel);
         String count = driver.findElement(By.xpath(Path.troop1+type+Path.troop2)).getText();

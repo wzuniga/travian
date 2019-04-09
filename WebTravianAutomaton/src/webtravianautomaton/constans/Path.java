@@ -16,7 +16,7 @@ public class Path {
     
     /* Server */
     //public static final String server = "https://ts20.hispano.travian.com/";
-    public static final String server = "https://unl9.ttwars.com/";
+    public static final String server = "https://low2.ttwars.com/";
     
     /* Login */
     public static final String login = server + "login.php";
@@ -50,7 +50,7 @@ public class Path {
     
     /* Actions Granja */
     //public static final String campo_up = "//*[@id=\"build\"]/div[3]/div[3]/div[1]/button";
-    public static final String campo_up = "//*[@id=\"build\"]/div[2]/div[4]/div[1]/button";
+    public static final String campo_up = "//*[@id=\"build\"]/div[2]/div[4]/button";
     
     /* Path Production per hour*/
     public static final String madera_prod = "//*[@id=\"production\"]/tbody/tr[1]/td[3]";
@@ -61,5 +61,6 @@ public class Path {
     /* Path spend time */
     //public static final String time = "//*[@id=\"content\"]/div[2]/div[10]/ul/li/div[2]/span";
     public static final String time = "//*[@id=\"content\"]/div[3]/div[10]/ul/li/div[2]/span";
+    
     
 }
